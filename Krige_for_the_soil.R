@@ -1,7 +1,7 @@
 # 加载所需包
 library(gstat)
 library(ggplot2)
-
+library(sp)
 # 读取土壤样本数据
 HSD_env <- read.csv("E:/Chu Lab/HSD.origin/soil_origin.csv",header = T,fileEncoding = "GBK")
 HSD_env_sp <- SpatialPointsDataFrame(coords=HSD_env[,c("gx", "gy")], data=HSD_env)
