@@ -83,43 +83,9 @@ total_data$TagNew = str_pad(total_data$TagNew,7,side = "left", "0")
 root_qrl <- data.frame()
 root_qrl <- left_join(Qrl_ca,total_data,by="Numbers")
 
-HSD_data$TagNew <- as.character(HSD_data$TagNew)
-str(HSD_data$TagNew)
-HSD_data$TagNew = str_pad(HSD_data$TagNew,7,side = "left", "0")
-root_qrl <- left_join(root_qrl,HSD_data,by="TagNew")
+HSD_data_0 <- subset(HSD_data,Branch==0)
+HSD_data_0$TagNew <- as.character(HSD_data_0$TagNew)
+str(HSD_data_0$TagNew)
+HSD_data_0$TagNew = str_pad(HSD_data_0$TagNew,7,side = "left", "0")
+root_qrl <- left_join(root_qrl,HSD_data_0,by="TagNew")
 root_qrl <- left_join(root_qrl,root_morphology,by="TagNew")
-
-
-#####
-#Then the krige
-####马珂 黑石顶数据插值
-#加载这个包
-library(geoR)
-###将root_qrl里的NA筛掉，填进root_qrl_env里
-root_qrl_env <- root_qrl %>% filter(!is.na(GX) | !is.na(GY))
-# 需要插值的坐标
-dat <- data.frame(x = root_qrl_env$GX, y = root_qrl_env$GY)
-
-
-for (ii in 1:31){
-###在原始的数据里，选项一列数据
-elev.g <- as.geodata(HSD_env, coords.col = 2:3, data.col = ii+3)
-###科技黑箱，不动就行
-elev.variog <- variog(elev.g,uvec = seq(0, 500, by = 5), max.dist = 500) # trend="2nd"可以不要
-elev.sph <- variofit(elev.variog, cov.model = "spherical") # 简单的选择了球面模型，模型选择要拟合，比较麻烦我一般不做
-
-
-# 最后插值
-elev.prd <- krige.conv(elev.g, loc = dat,
-                      krige = krige.control(
-                        cov.model = "spherical",
-                        cov.pars = c(elev.sph$cov.pars[1],
-                                     elev.sph$cov.pars[2])))
-
-# 结果提取：
-root_qrl_env <- cbind(root_qrl_env, elev.prd$predict)
-colnames(root_qrl_env)[ii+55] <- paste0(colnames(HSD_env)[ii+3])
-}
-
-#write.csv(root_qrl_env,"BS_root_qrl_env.csv",fileEncoding = "GBK")
-save(root_qrl_env,file = "qrl_env.RData")
