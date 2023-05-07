@@ -1,23 +1,25 @@
 # 加载所需包
+library(sp)
 library(gstat)
 library(automap)
-library(rgdal)
-library(rgeos)
+library(sf)
 library(ggplot2)
-library(sp)
 
-#好像好了哎
 
 # 读取土壤样本数据
 HSD_env <- read.csv("E:/Chu Lab/HSD.origin/soil_origin.csv",header = T,fileEncoding = "GBK")
 
-# 删除HSD_env中包含NA的行
+
 HSD_env_s <- HSD_env[,c("gx","gy","pH")]
 
 #将数据框转化为SpatialPointsDataFrame对象
 #HSD_env_sp <- SpatialPointsDataFrame(coords=HSD_env_s[,c("gx", "gy")], data=HSD_env_s)
-proj4string(HSD_env_sp) <- crs
-HSD_env_sp <- SpatialPointsDataFrame(coords = HSD_env_s[,c("gx", "gy")], data = data.frame(pH = HSD_env_s$pH))
+
+#HSD_env_sp <- SpatialPointsDataFrame(coords = HSD_env_s[,c("gx", "gy")], data = data.frame(pH = HSD_env_s$pH))
+#crs <- CRS("+proj=utm +zone=48 +datum=WGS84")
+#proj4string(HSD_env_sp) <- crs
+HSD_env_sf <- st_as_sf(HSD_env_s, coords = c("gx", "gy"), crs = "+proj=utm +zone=48 +datum=WGS84")
+#HSD_env_sp_transformed <- sp::spTransform(HSD_env_sp, crs)
 #proj4string(HSD_env_sp) <- CRS("+proj=utm +zone=48 +datum=WGS84")
 
 
@@ -30,11 +32,11 @@ HSD_line <- na.omit(HSD_line)
 #定义插值模型
 #model <- gstat::vgm(psill =1, model = "Sph", range = 2)
 #自动拟合
-fit_auto <- autofitVariogram(pH ~ 1, HSD_env_sp)
+fit_auto <- autofitVariogram(pH ~ 1, HSD_env_sf)
 
 #进行克里金插值
 #krige_result <- gstat::krige(param~1, HSD_env_sp, HSD_line, nmax = 20, model=model)
-pred_auto <- autoKrige(pH ~ 1, HSD_env_sp,HSD_line)
+pred_auto <- st_interpolate_aw(HSD_env_sf, newdata = HSD_line, model = fit_auto$model)
 
 # 绘制插值结果
 ggplot() +
