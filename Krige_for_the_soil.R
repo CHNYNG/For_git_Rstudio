@@ -18,10 +18,11 @@ HSD_env_s <- HSD_env[,c("gx","gy","pH")]
 #HSD_env_sp <- SpatialPointsDataFrame(coords=HSD_env_s[,c("gx", "gy")], data=HSD_env_s)
 proj4string(HSD_env_sp) <- crs
 HSD_env_sp <- SpatialPointsDataFrame(coords = HSD_env_s[,c("gx", "gy")], data = data.frame(pH = HSD_env_s$pH))
-proj4string(HSD_env_sp) <- CRS("+proj=utm +zone=48 +datum=WGS84")
+#proj4string(HSD_env_sp) <- CRS("+proj=utm +zone=48 +datum=WGS84")
 
 
 #创建插值点的坐标
+load(file = "E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl.RData")
 HSD_line <- as.data.frame(root_qrl[,c("GX","GY")])
 colnames(HSD_line) <- c("gx","gy")
 HSD_line <- na.omit(HSD_line)
