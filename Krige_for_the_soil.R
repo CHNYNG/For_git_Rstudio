@@ -147,3 +147,5 @@ b <- ggplot(pca, aes(x=PC1, y=PC2,colour=Sp_Name),
 
 b
 
+####保存一下RData
+save(d,file = "E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData")
