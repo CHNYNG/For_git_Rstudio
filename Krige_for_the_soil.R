@@ -3,19 +3,20 @@
 ####导入文启师兄的数据（删掉了单位的一行）
 soil <- read.csv("E:/Chu Lab/Soil_Luo.csv",header = T)
 ###画一下
-x11()
-par(mfrow = c(5,7))
-apply(soil[,4:34], 2, hist)
-dev.off()
+#x11()
+#par(mfrow = c(5,7))
+#apply(soil[,4:34], 2, hist)
+#dev.off()
 #正态一下
-a <- apply(soil[,c("SOM","TP","EAl","TZn","TFe","TNa","AK","EK","ETB","TCu","AMn","ENa","ECa","AS","TMn","TCa","EC")], 2, log)
-a <- cbind(soil[,c("X","gx","gy","pH","AN","AP","TN","TK","Sand","Silt","ACu","AZn","AFe",
-                   "EMg","AB","TMg","MWC")],a)
+#a <- apply(soil[,c("SOM","TP","EAl","TZn","TFe","TNa","AK","EK","ETB","TCu","AMn","ENa","ECa","AS","TMn","TCa","EC")], 2, log)
+#a <- cbind(soil[,c("X","gx","gy","pH","AN","AP","TN","TK","Sand","Silt","ACu","AZn","AFe",
+#                   "EMg","AB","TMg","MWC")],a)
 #再画一下
-par(mfrow = c(5,7))
-apply(a[,4:34], 2, hist)
+#par(mfrow = c(5,7))
+#apply(a[,4:34], 2, hist)
 ###auto克里金
 library(automap)
+library(sp)
 rm(b)
 b <- a
 load("root_qrl.RData")
