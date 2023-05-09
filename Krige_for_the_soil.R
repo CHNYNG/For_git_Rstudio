@@ -19,7 +19,7 @@ library(automap)
 library(sp)
 rm(b)
 b <- a
-load("root_qrl.RData")
+load("E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl.RData")
 root_qrl_na <- root_qrl[!is.na(root_qrl$GX), ]
 prd.loc <- root_qrl_na[,c("GX","GY")]
 colnames(prd.loc) <- c("gx","gy") 
