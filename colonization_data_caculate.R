@@ -89,4 +89,9 @@ str(HSD_data_0$TagNew)
 HSD_data_0$TagNew = str_pad(HSD_data_0$TagNew,7,side = "left", "0")
 root_qrl <- left_join(root_qrl,HSD_data_0,by="TagNew")
 root_qrl <- left_join(root_qrl,root_morphology,by="TagNew")
+
+#整理下root_qrl
+root_qrl <- as.data.frame(root_qrl)
+root_qrl <- root_qrl %>% select(-X.x, -Species.y, -Species.y.y)
+
 save(root_qrl,file = "E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl.RData")
