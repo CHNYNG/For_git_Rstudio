@@ -1,8 +1,11 @@
-<<<<<<< HEAD
-# For_git_Rstudio
-#Set my Rstudio and mycorrhiza code
-
-=======
 # Mycorrhiza-in-subforests
-To wrote the Rcode for my artical
->>>>>>> 5ed13e3ae454620f1010d4dffc6e9f1c998d0378
+Set my Rstudio and mycorrhiza code
+
+colonization_data_caculate.R
+For caculating data from raw data
+
+colonization_analysis.R
+For colonization analysis with other factors
+
+Krige_for_the_soil.R
+For caculate the soil factors from Wenqi's database
