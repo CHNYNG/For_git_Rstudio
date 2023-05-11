@@ -15,13 +15,37 @@ library(ggplot2)
 ######
 # 画散点图和回归线
 library(dplyr)
+
+####进行boxcox转换
+library(MASS)
+# 对d_AM$qr_AM列使用Box-Cox转换
+d_AM$qr_AM_bc <- boxcox(as.data.frame(d_AM$qr_AM ~ 1))
+
+boxcox(qr_AM ~ 1, data = d_AM,lambda = seq(4,5, length.out = 10))
+
+hist(d_AM$qr_AM^(4.6))
+r2=lm(gr_rate~qr_AM^4.6, data=d_AM)
+hist(r2$residuals)
+summary(r2)
+
+a = (d_AM$qr_AM)^4.6
+
+plot(d_AM$gr_rate~a)
+
+hist(d_AM$gr_rate)
 cor.test(d_AM$qr_AM, d_AM$gr_rate)
 d_AM <- subset(d, !is.na(qr_AM))
-ggplot(d_AM, aes(x=qr_AM, y=gr_rate)) + 
-  geom_point() + 
-  geom_smooth(method="lm", se=FALSE) +
-  annotate("text", x = max(d_AM$qr_AM), y = min(d_AM$gr_rate), 
-           label = paste0("R = ", round(cor(d_AM$qr_AM, d_AM$gr_rate), 2), "\n p < 0.001"))
+
+
+# 拟合二项式回归模型
+fit <- glm(gr_rate ~ qr_AM, data = d_AM, family = binomial(link = "logit"))
+
+# 绘制散点图和拟合曲线
+ggplot(dat, aes(x = qr_AM, y = y)) +
+  geom_point() +
+  geom_smooth(method = "glm", method.args = list(family = binomial), se = FALSE) +
+  ggtitle(paste0("Logistic Regression (AIC = ", round(AIC(fit), 2), ")"))
+
 
 
 ######
