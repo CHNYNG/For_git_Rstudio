@@ -357,27 +357,182 @@ display: none;
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
-</div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
+<p>#####首先summary一下</p>
+<pre class="r"><code>load(&quot;E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData&quot;)
+summary(d)</code></pre>
+<pre><code>##    Numbers              gcsys            EMsys            jssys       
+##  Length:3545        Min.   :  3.00   Min.   : 10.00   Min.   :  1.00  
+##  Class :character   1st Qu.: 52.00   1st Qu.: 52.00   1st Qu.: 46.00  
+##  Mode  :character   Median : 63.00   Median : 60.00   Median : 58.00  
+##                     Mean   : 70.87   Mean   : 62.98   Mean   : 63.54  
+##                     3rd Qu.: 81.00   3rd Qu.: 73.00   3rd Qu.: 74.00  
+##                     Max.   :303.00   Max.   :139.00   Max.   :240.00  
+##                     NA&#39;s   :2        NA&#39;s   :3392     NA&#39;s   :1102    
+##        BZ              Hbbz            Pn               Pq            Fzxb     
+##  Min.   :   1.0   Min.   : NA    Min.   :  45.0   Min.   :  46   Min.   : NA   
+##  1st Qu.:  73.0   1st Qu.: NA    1st Qu.: 223.0   1st Qu.:1080   1st Qu.: NA   
+##  Median : 118.0   Median : NA    Median : 336.0   Median :2640   Median : NA   
+##  Mean   : 221.8   Mean   :NaN    Mean   : 423.6   Mean   :2482   Mean   :NaN   
+##  3rd Qu.: 336.0   3rd Qu.: NA    3rd Qu.: 448.0   3rd Qu.:3500   3rd Qu.: NA   
+##  Max.   :1040.0   Max.   : NA    Max.   :1615.0   Max.   :6600   Max.   : NA   
+##  NA&#39;s   :3526     NA&#39;s   :3545   NA&#39;s   :3524     NA&#39;s   :3520   NA&#39;s   :3545  
+##      qr_AM            qr_EM           qr_BZ           qr_Hbbz    
+##  Min.   :0.0482   Min.   :0.193   Min.   : 0.077   Min.   : NA   
+##  1st Qu.:0.8258   1st Qu.:0.875   1st Qu.: 0.893   1st Qu.: NA   
+##  Median :0.9506   Median :0.954   Median : 1.462   Median : NA   
+##  Mean   :0.8812   Mean   :0.922   Mean   : 2.469   Mean   :NaN   
+##  3rd Qu.:1.0000   3rd Qu.:1.000   3rd Qu.: 3.477   3rd Qu.: NA   
+##  Max.   :1.0000   Max.   :2.213   Max.   :10.833   Max.   : NA   
+##  NA&#39;s   :1102     NA&#39;s   :3392    NA&#39;s   :3526     NA&#39;s   :3545  
+##      qr_Pn            qr_Pq          qr_fzxb        TagNew         
+##  Min.   : 0.433   Min.   : 0.73   Min.   : NA    Length:3545       
+##  1st Qu.: 2.742   1st Qu.:22.04   1st Qu.: NA    Class :character  
+##  Median : 4.076   Median :38.46   Median : NA    Mode  :character  
+##  Mean   : 5.164   Mean   :36.83   Mean   :NaN                      
+##  3rd Qu.: 6.096   3rd Qu.:50.00   3rd Qu.: NA                      
+##  Max.   :17.944   Max.   :94.29   Max.   : NA                      
+##  NA&#39;s   :3524     NA&#39;s   :3520    NA&#39;s   :3545                     
+##       X.1            Latin               DATE1              DATE2      
+##  Min.   :    41   Length:3545        Min.   :20110904   Min.   :42617  
+##  1st Qu.: 45239   Class :character   1st Qu.:20111123   1st Qu.:42687  
+##  Median : 94092   Mode  :character   Median :20111217   Median :42736  
+##  Mean   :101088                      Mean   :20115598   Mean   :42746  
+##  3rd Qu.:156611                      3rd Qu.:20120909   3rd Qu.:42807  
+##  Max.   :201144                      Max.   :20130525   Max.   :42882  
+##                                      NA&#39;s   :1                         
+##      Qudrat            Tag                Branch   Species.x        
+##  Min.   : 10102   Min.   : 10007204   Min.   :0   Length:3545       
+##  1st Qu.: 82702   1st Qu.: 11026135   1st Qu.:0   Class :character  
+##  Median :143203   Median : 12032460   Median :0   Mode  :character  
+##  Mean   :141242   Mean   : 11641445   Mean   :0                     
+##  3rd Qu.:203202   3rd Qu.: 12305273   3rd Qu.:0                     
+##  Max.   :255001   Max.   :123078951   Max.   :0                     
+##                                                                     
+##      GF.x                 GX               GY          Status1         
+##  Length:3545        Min.   :  0.15   Min.   :  0.1   Length:3545       
+##  Class :character   1st Qu.:301.00   1st Qu.:149.5   Class :character  
+##  Mode  :character   Median :533.10   Median :271.9   Mode  :character  
+##                     Mean   :522.96   Mean   :267.0                     
+##                     3rd Qu.:750.50   3rd Qu.:392.1                     
+##                     Max.   :999.90   Max.   :499.8                     
+##                                                                        
+##    Status2               DBH1             DBH2              H         
+##  Length:3545        Min.   : 0.950   Min.   : 0.910   Min.   : 1.300  
+##  Class :character   1st Qu.: 1.590   1st Qu.: 1.790   1st Qu.: 3.300  
+##  Mode  :character   Median : 2.740   Median : 3.100   Median : 5.000  
+##                     Mean   : 6.448   Mean   : 6.955   Mean   : 7.282  
+##                     3rd Qu.: 7.190   3rd Qu.: 7.850   3rd Qu.: 8.500  
+##                     Max.   :95.490   Max.   :96.100   Max.   :60.000  
+##                                                       NA&#39;s   :21      
+##     Family             Genus           Species.x.x          abundance    
+##  Length:3545        Length:3545        Length:3545        Min.   :   56  
+##  Class :character   Class :character   Class :character   1st Qu.:  180  
+##  Mode  :character   Mode  :character   Mode  :character   Median :  434  
+##                                                           Mean   : 1253  
+##                                                           3rd Qu.: 1346  
+##                                                           Max.   :17946  
+##                                                                          
+##      GF.y           Opterator.x         Length(cm)        Opterator.y       
+##  Length:3545        Length:3545        Length:3545        Length:3545       
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  ProjArea(cm2)      SurfArea(cm2)        AvgDiam(mm)      根系扫描日期     
+##  Min.   :  0.0448   Min.   :   0.1407   Min.   :0.1026   Min.   :20120125  
+##  1st Qu.:  1.4364   1st Qu.:   4.5127   1st Qu.:0.1937   1st Qu.:20201106  
+##  Median :  2.9545   Median :   9.2818   Median :0.2948   Median :20210724  
+##  Mean   :  6.0191   Mean   :  18.9096   Mean   :0.3877   Mean   :20210786  
+##  3rd Qu.:  5.5650   3rd Qu.:  17.4831   3rd Qu.:0.4684   3rd Qu.:20211010  
+##  Max.   :419.4710   Max.   :1317.8070   Max.   :7.4841   Max.   :21210701  
+##  NA&#39;s   :825        NA&#39;s   :825         NA&#39;s   :825      NA&#39;s   :1226      
+##      No_Dat       菌根侵染编号          称重日期           Weight.g     
+##  Min.   : 1.000   Length:3545        Min.   :20200925   Min.   :0.0009  
+##  1st Qu.: 3.000   Class :character   1st Qu.:20201213   1st Qu.:0.0105  
+##  Median : 6.000   Mode  :character   Median :20210803   Median :0.0201  
+##  Mean   : 7.812                      Mean   :20208303   Mean   :0.0357  
+##  3rd Qu.:12.000                      3rd Qu.:20211203   3rd Qu.:0.0445  
+##  Max.   :43.000                      Max.   :20220102   Max.   :0.8280  
+##  NA&#39;s   :1415                        NA&#39;s   :1435       NA&#39;s   :1259    
+##     错写为              X.y               SRL(gcm)           SOM       
+##  Length:3545        Length:3545        Min.   :0.0000   Min.   : 8.98  
+##  Class :character   Class :character   1st Qu.:0.0001   1st Qu.:31.08  
+##  Mode  :character   Mode  :character   Median :0.0002   Median :35.29  
+##                                        Mean   :0.0003   Mean   :36.80  
+##                                        3rd Qu.:0.0004   3rd Qu.:41.69  
+##                                        Max.   :0.0056   Max.   :65.39  
+##                                        NA&#39;s   :1259                    
+##        TP               EAl             TZn             TFe       
+##  Min.   :0.05585   Min.   :1.115   Min.   :21.46   Min.   : 5765  
+##  1st Qu.:0.09088   1st Qu.:4.066   1st Qu.:30.28   1st Qu.:10351  
+##  Median :0.10067   Median :4.944   Median :32.03   Median :11828  
+##  Mean   :0.10019   Mean   :4.942   Mean   :32.13   Mean   :12135  
+##  3rd Qu.:0.11014   3rd Qu.:5.776   3rd Qu.:33.76   3rd Qu.:13449  
+##  Max.   :0.14273   Max.   :9.106   Max.   :44.33   Max.   :24870  
+##                                                                   
+##       TNa               AK               EK              ETB        
+##  Min.   : 482.7   Min.   : 41.27   Min.   :0.1054   Min.   :0.2914  
+##  1st Qu.:1222.4   1st Qu.: 57.86   1st Qu.:0.1480   1st Qu.:0.4186  
+##  Median :1574.9   Median : 63.83   Median :0.1633   Median :0.4770  
+##  Mean   :1660.3   Mean   : 68.21   Mean   :0.1744   Mean   :0.5188  
+##  3rd Qu.:2012.4   3rd Qu.: 72.51   3rd Qu.:0.1854   3rd Qu.:0.5813  
+##  Max.   :6105.2   Max.   :178.69   Max.   :0.4595   Max.   :1.1581  
+##                                                                     
+##       TCu             AMn               ENa               ECa         
+##  Min.   :0.754   Min.   : 0.5953   Min.   :0.01036   Min.   :0.08109  
+##  1st Qu.:1.552   1st Qu.: 1.7603   1st Qu.:0.02401   1st Qu.:0.13538  
+##  Median :1.946   Median : 2.6003   Median :0.03635   Median :0.16920  
+##  Mean   :2.122   Mean   : 3.3316   Mean   :0.05145   Mean   :0.19331  
+##  3rd Qu.:2.448   3rd Qu.: 3.9131   3rd Qu.:0.06398   3rd Qu.:0.22139  
+##  Max.   :8.820   Max.   :23.2000   Max.   :0.26804   Max.   :0.89750  
+##                                                                       
+##        AS              TMn              TCa               EC       
+##  Min.   : 6.797   Min.   : 26.87   Min.   : 61.59   Min.   :22.59  
+##  1st Qu.:12.985   1st Qu.: 49.53   1st Qu.:175.99   1st Qu.:29.20  
+##  Median :15.593   Median : 58.32   Median :213.79   Median :32.45  
+##  Mean   :16.495   Mean   : 64.21   Mean   :217.13   Mean   :33.55  
+##  3rd Qu.:18.874   3rd Qu.: 70.17   3rd Qu.:255.53   3rd Qu.:35.31  
+##  Max.   :70.575   Max.   :278.86   Max.   :417.31   Max.   :80.06  
+##                                                                    
+##        pH              AN              AP               TN        
+##  Min.   :4.176   Min.   :112.0   Min.   :0.3084   Min.   :0.9839  
+##  1st Qu.:4.424   1st Qu.:140.4   1st Qu.:1.3935   1st Qu.:1.3409  
+##  Median :4.479   Median :150.0   Median :1.6192   Median :1.4718  
+##  Mean   :4.483   Mean   :152.6   Mean   :1.7110   Mean   :1.5183  
+##  3rd Qu.:4.541   3rd Qu.:162.1   3rd Qu.:1.9435   3rd Qu.:1.6787  
+##  Max.   :4.729   Max.   :238.1   Max.   :5.5291   Max.   :2.4657  
+##                                                                   
+##        TK              Sand            Silt            ACu         
+##  Min.   : 2.294   Min.   :43.52   Min.   :15.55   Min.   :0.08834  
+##  1st Qu.:20.003   1st Qu.:59.48   1st Qu.:23.16   1st Qu.:0.13200  
+##  Median :27.569   Median :62.68   Median :24.54   Median :0.15076  
+##  Mean   :26.270   Mean   :62.40   Mean   :24.57   Mean   :0.15455  
+##  3rd Qu.:33.667   3rd Qu.:65.76   3rd Qu.:26.12   3rd Qu.:0.17186  
+##  Max.   :48.540   Max.   :76.56   Max.   :30.99   Max.   :0.31689  
+##                                                                    
+##       AZn             AFe              EMg                AB         
+##  Min.   :1.025   Min.   : 36.34   Min.   :0.02618   Min.   :0.07491  
+##  1st Qu.:1.808   1st Qu.: 62.43   1st Qu.:0.04988   1st Qu.:0.16571  
+##  Median :1.949   Median : 71.90   Median :0.05761   Median :0.18551  
+##  Mean   :2.020   Mean   : 74.18   Mean   :0.06008   Mean   :0.18946  
+##  3rd Qu.:2.150   3rd Qu.: 84.01   3rd Qu.:0.06772   3rd Qu.:0.21131  
+##  Max.   :4.783   Max.   :124.96   Max.   :0.14319   Max.   :0.42840  
+##                                                                      
+##       TMg              MWC        
+##  Min.   : 273.8   Min.   : 6.369  
+##  1st Qu.: 523.1   1st Qu.: 9.449  
+##  Median : 596.1   Median :10.339  
+##  Mean   : 609.5   Mean   :10.345  
+##  3rd Qu.: 676.8   3rd Qu.:11.248  
+##  Max.   :1512.9   Max.   :14.867  
+## </code></pre>
+<div id="相关性分析" class="section level2">
+<h2>相关性分析</h2>
+<p>先对数据进行<strong>SCALE</strong>，使用x_scaled = (x - min(x)) /
+(max(x) -
+min(x))这个最简单的方法，让数据形成0-1的，方便进行后续的分析</p>
 <p><img src="data:image/png;base64,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" width="672" /></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the
 code chunk to prevent printing of the R code that generated the

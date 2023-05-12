@@ -3,30 +3,28 @@ title: "colonization_analysis"
 author: "cy"
 date: "2023-05-12"
 output:
-  html_document:
-  keep_md: true
+ html_document:
+ keep_md: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#####首先展示一下数据 
+
+```{r d}
+load("E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData")
+summary(d)
+
 ```
 
-## R Markdown
+## 数据的简单处理
+先对数据进行**SCALE**，使用x_scaled = (x - min(x)) / (max(x) - min(x))这个最简单的方法，让数据形成0-1的，方便进行后续的分析
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r d, echo=FALSE}
+#选取数据的部分进行scale
+d_scaled <- d[,c("TagNew","Family","Genus","Species.x.x","GX","GY","qr_AM","qr_EM","qr_BZ","qr_Hbbz", "qr_Pn","qr_Pq","qr_fzxb", "DBH1", "DBH2", "H", "abundance", "Length(cm)","Opterator.y","ProjArea(cm2)", "SurfArea(cm2)","AvgDiam(mm)","Weight.g","X.y","SRL(gcm)","SOM","TP","EAl","TZn","TFe","TNa","AK", "EK", "ETB","TCu","AMn",  "ENa","ECa","AS","TMn","TCa","EC","pH", "AN", "AP","TN", "TK", "Sand", "Silt","ACu","AZn","AFe","EMg","AB","TMg","MWC" )]
+d_scaled <- apply(d, 2, function(x) (x - min(x)) / (max(x) - min(x)))
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+## 相关性分析
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
