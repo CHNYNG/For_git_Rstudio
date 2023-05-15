@@ -39,7 +39,7 @@ cor.test(d_AM$AM_4.6, d_AM$gr_rate)
 
 # 拟合二项式回归模型
 
-fit <- glm(gr_rate ~ qr_AM, data = d_AM, family = binomial(link = "logit"))
+fit <- glm(sc_gr_rate ~ sc_qr_AM, data = d_AM, family = binomial(link = "logit"))
 
 # 绘制散点图和拟合曲线
 library(ggplot2)
@@ -61,12 +61,33 @@ ggplot(data.frame(PC1=pca$x[,1], PC2=pca$x[,2])) +
 #3.线性回归分析
 #####
 # 画散点图和回归线
-ggplot(d, aes(x=qr_AM, y=gr_rate)) + 
-  geom_point() + 
-  geom_smooth(method="lm", se=FALSE) +
-  xlab("qr_AM") + 
-  ylab("gr_rate") +
-  theme_minimal()
+# calculate slope and intercept
+m <- coef(lm(sc_gr_rate ~ sc_qr_AM, data = d_AM))[2]
+b <- coef(lm(sc_gr_rate ~ sc_qr_AM, data = d_AM))[1]
+
+p <- ggplot(d_AM, aes(x=sc_qr_AM, y=sc_gr_rate)) + 
+  geom_point(color="#e5f5f9", shape=16, size=3) + 
+  geom_smooth(method="lm", se=TRUE, color="#99d8c9", size=1.2) +
+  xlab("AM侵染率") + 
+  ylab("生长速率") +
+  theme_minimal()+
+  theme(axis.text = element_text(size = 15),
+        axis.title = element_text(size = 18))
+
+# calculate correlation coefficient and p-value
+r <- cor(d_AM$sc_qr_AM, d_AM$sc_gr_rate)
+pval <- summary(lm(sc_gr_rate ~ sc_qr_AM, data = d_AM))$coef[2, 4]
+
+# add annotation for correlation coefficient and p-value
+p <- p +
+  annotate("text", x = max(d_AM$sc_qr_AM), y = min(d_AM$sc_gr_rate), 
+           label = paste0("R = ", round(r, 2), "\n p = ", format(pval, scientific = TRUE, digits = 2)),
+           hjust = 1) +
+  geom_text(x = max(d_AM$sc_qr_AM), y = max(d_AM$sc_gr_rate), 
+            label = paste0("Slope = ", round(m, 2), "\n Intercept = ", round(b, 2)), 
+            hjust = 1, vjust = 1)
+
+p
 
 #4.方差分析
 #####
