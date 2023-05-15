@@ -1,0 +1,40 @@
+---
+title: "生物和非生物因子对菌根侵染率的影响"
+author: "cy"
+date: "2023-05-15"
+output: html_document
+---
+# 分析目标
+目标主题的确定有利于进一步的分析，每次进来之前先看主题！！！（#后面记得加空格不然不识别
+
+**生物-自身因素-植物自身（host）（host-colonization）**
+
+**谱系是否保守（和数据库对照） 考虑谱系的距离（谱系信号）**
+
+Y (colonization rate) ~ species identity （物种、大小）+ neighbors (邻体数量、类型、或许要分同种异种、是否加权谱系（CNDD系数（不同类型））) +soil+light+…*
+
+
+```{r setup, include=FALSE}
+#加载数据
+load("E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData")
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
