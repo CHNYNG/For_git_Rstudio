@@ -12,11 +12,38 @@ output: html_document
 **谱系是否保守（和数据库对照） 考虑谱系的距离（谱系信号）**
 
 Y (colonization rate) ~ species identity （物种、大小）+ neighbors (邻体数量、类型、或许要分同种异种、是否加权谱系（CNDD系数（不同类型））) +soil+light+…*
+ 1. 首先，Y侵染率有了，需要的数据species identity应该是每个物种，这是个分类变量？或者分类+连续变量，就是host的侵染率，也有了。下面要解决的问题就是neighbors，那么先筛选出邻体？
+ 
+ 
 
-
-```{r setup, include=FALSE}
+```{r neighbors, include=FALSE}
 #加载数据
 load("E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData")
+HSD <- read.csv("E:/Chu Lab/hsd.species.alive.cy.branch0.csv",header = TRUE,fileEncoding = "GBK" )
+
+# 创建一个空的数据框用于存储结果
+result <- data.frame()
+
+# 遍历d数据集的每一行
+for (i in 1:nrow(d)) {
+  # 计算当前行的点与HSD数据集中所有点的距离
+  distances <- sqrt((d$GX[i] - HSD$GX)^2 + (d$GY[i] - HSD$GY)^2)
+  
+  # 筛选出距离小于10米的点的索引
+  indices <- which(distances < 10)
+  
+  # 如果存在距离小于10米的点，则将这些点添加到结果数据框中
+  if (length(indices) > 0) {
+    result <- rbind(result, data.frame(d[i,c("TagNew") ], HSD[indices,c("TagNew") ]))
+  }
+}
+
+# 查看结果
+print(result)
+
+
+
+
 ```
 
 ## R Markdown
