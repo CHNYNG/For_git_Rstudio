@@ -20,6 +20,9 @@ Y (colonization rate) ~ species identity （物种、大小）+ neighbors (邻�
 #加载数据
 load("E:/黑石顶测菌根/菌根侵染率/数据整理/tmp/For_git_Rstudio/root_qrl_soil.RData")
 HSD <- read.csv("E:/Chu Lab/hsd.species.alive.cy.branch0.csv",header = TRUE,fileEncoding = "GBK" )
+HSD <- HSD[,c("TagNew","Latin","Qudrat","Species","GX","GY","Status1","Status2","DBH1","DBH2","H","Family","Genus","Species.x","abundance")]
+HSD_species <- subset(HSD, select = c(Family, Genus, Species.x, Species, Latin))
+HSD_species <- unique(HSD_species)
 
 # 创建一个空的数据框用于存储结果
 result <- data.frame()
@@ -38,10 +41,34 @@ for (i in 1:nrow(d)) {
   }
 }
 
-#然后，这部分我在服务器上跑了
-#把服务器上的数据捞回来
+#改一下列名，把focal的列名改为TagNew_f它的邻体为n
+colnames(result) <- c("TagNew_f","TagNew_n")
 
-#获取了
+#给TagNew_f和TagNew_n带上它们原本的数据
+library(dplyr)
+
+neighborselect <- left_join(result, HSD, by = c("TagNew_f" = "TagNew"))
+
+neighborselect <- left_join(neighborselect, HSD, by = c("TagNew_n" = "TagNew"))
+
+#整理一下列名
+colnames(neighborselect) <- c("TagNew_f", "TagNew_n", "Latin_f", "Qudrat_F", "Species_f","GX_f",  "GY_f",  "Status1_f","Status2_F", "DBH1_f","DBH2_f", "H_f","Family_f",  "Genus_f",   "Species.x_f","abundance_f",
+"Latin_n",   "Qudrat_n",  "Species_n", "GX_n", "GY_n", "Status1_n", "Status2_n", "DBH1_n", "DBH2_n","H_n",   "Family_n",  "Genus_n", "Species.x_n", "abundance_n")
+
+#把距离打出来
+neighborselect$distance <- sqrt((neighborselect$GX_f-neighborselect$GX_n)^2+(neighborselect$GY_f-neighborselect$GY_n)^2)
+
+###给它们分个家，把同种和异种分出来
+neighborselect$Type <- ifelse(neighborselect$Species_f == neighborselect$Species_n,
+                              "homospecies", "heterspecies")
+
+####提取物种对的信息
+species_pairs <- unique(t(combn(unique(neighborselect$Species_f), 2)))
+colnames(species_pairs) <- c("Species_f","Species_n")
+species_pairs <- as.data.frame(species_pairs)
+###把它们的物种信息合并进去
+species_pairs <- left_join(species_pairs, HSD_species, by = c("Species_f" = "Species"))
+species_pairs <- left_join(species_pairs, HSD_species, by = c("Species_n" = "Species"))
 
 
 ```
