@@ -80,6 +80,8 @@ sp_tree <- phylo.maker(sp.lis=sp_list)
 sp_tr <- sp_tree$scenario.3
 plot(sp_tr)
 write.tree(sp_tr, "sp_tree.newick")
+dist.mat <- conphenetic(sp_tr)
+
 
 ```
 
